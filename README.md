@@ -4,7 +4,6 @@ When we initialize a context using something like
 
 ```
 export const MainContext = createContext()
-
 ```
 
 We are creating a context which would be assesable by other components that are under the context's context provider
@@ -27,6 +26,4 @@ export const useMainContext = () => {
   }
   return context;
 };
-
-
 ```
