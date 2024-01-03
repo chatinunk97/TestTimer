@@ -27,3 +27,19 @@ export const useMainContext = () => {
   return context;
 };
 ```
+
+# How does setInterval() work
+
+setInterval() is a function in JavaScript that is used to repeatedly execute a given function at a specified interval. It takes two arguments: the first argument is the function to be executed, and the second argument is the time interval (in milliseconds) between each execution.
+
+Here is an example to illustrate how setInterval() works:
+
+```
+setInterval(function() {
+  // code to be executed repeatedly
+  console.log("This will be printed every 2 seconds");
+}, 2000);
+```
+
+In the example above, the provided anonymous function will be executed every 2 seconds (2000 milliseconds) and will print the message "This will be printed every 2 seconds" to the console.
+[Source ](https://www.shecodes.io/athena/143127-how-does-setinterval-work-in-javascript).

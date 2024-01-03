@@ -1,17 +1,17 @@
 import { useEffect } from "react";
 
 interface TimerProps {
-  compTime: number;
-  setCompTime: (time: number) => void;
+  time: number;
+  setTime: (time: number) => void;
 }
 
-export const Timer: React.FC<TimerProps> = ({ compTime, setCompTime }) => {
+export const Timer: React.FC<TimerProps> = ({ time, setTime }) => {
   useEffect(() => {
-    const interval = setInterval(() => setCompTime(compTime - 1), 1000);
+    const interval = setInterval(() => setTime(time - 1), 10);
     return () => {
       clearInterval(interval);
     };
-  }, [compTime]);
+  }, [time]);
 
-  return <div>{compTime}</div>;
+  return <div>{time}</div>;
 };
