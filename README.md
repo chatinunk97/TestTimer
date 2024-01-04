@@ -1,3 +1,11 @@
+# Design
+
+Timer input Minutes and seconds MM : SS
+Numbers of questions for that test X Questions
+
+Find a way to count every seconds
+Find a way to update the current question the use should be on (if possible link to the timer ?)
+
 # TS with Context
 
 When we initialize a context using something like
