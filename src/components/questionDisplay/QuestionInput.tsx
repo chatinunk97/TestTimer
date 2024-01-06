@@ -11,12 +11,17 @@ export const QuestionInput = () => {
     minute,
     isRunning,
   } = useMainContext();
+  //Track user input on how many question there are
   const [questionCount, setQuestionCount] = useState(0);
 
-  const totalGlobalTime =
-    globalminute * 60 + globalsecond + globalmilisecond / 60;
-  const totalTimerTime = minute * 60 + second + milisecond / 60;
+  //Shows the timer per question upon setting up
+  const timePerQuestion = Math.round(
+    (minute * 60 + second + milisecond / 60) / questionCount
+  );
 
+  // Use to calculate the initial setup time and the timer's time
+  const globalTime = globalminute * 60 + globalsecond + globalmilisecond / 60;
+  const timerTime = minute * 60 + second + milisecond / 60;
   return (
     <div>
       <input
@@ -24,8 +29,17 @@ export const QuestionInput = () => {
         onChange={(e) => {
           setQuestionCount(+e.target.value);
         }}
+        disabled={isRunning}
       ></input>
-      {isRunning ? <p>{totalGlobalTime}</p> : <p>{totalTimerTime}</p>}
+
+      {isRunning ? (
+        <p>
+          You should be on question number
+          <h1>{Math.ceil((globalTime - timerTime) / timePerQuestion)}</h1>
+        </p>
+      ) : (
+        <p>You have {timePerQuestion} seconds per question</p>
+      )}
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useMainContext } from "../../hooks/useMainContext";
 import { TimeInput } from "./TimeInput";
 import { setTime } from "../../context/MainContext";
@@ -48,13 +48,24 @@ export const Clock: React.FC = () => {
     return;
   };
   const handleStart = () => {
-    console.log(minute, second, milisecond);
+    if (!milisecond && !second && !minute) {
+      alert("Please setup the timer first");
+      return;
+    }
     setGlobalMilisecond(milisecond);
     setGlobalSecond(second);
     setGlobalMinute(minute);
     setIsrunning(!isRunning);
   };
-
+  const handleReset = () => {
+    setGlobalMilisecond(0);
+    setGlobalSecond(0);
+    setGlobalMinute(0);
+    setMilisecond(0);
+    setSecond(0);
+    setMinute(0);
+    setIsrunning(false);
+  };
   //#######################  Refactor and seperate the Clock the timer to each file now is to much code in here
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
@@ -90,8 +101,11 @@ export const Clock: React.FC = () => {
           );
         })}
       </div>
-
-      <button onClick={handleStart}>{!isRunning ? "Start !" : "Stop!!"}</button>
+      {isRunning ? (
+        <button onClick={handleReset}>STOP</button>
+      ) : (
+        <button onClick={handleStart}>Start</button>
+      )}
     </>
   );
 };

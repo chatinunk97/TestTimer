@@ -1,4 +1,4 @@
-import { SetStateAction, createContext, useState } from "react";
+import { createContext, useState } from "react";
 interface ChildProps {
   children: React.ReactNode;
 }
