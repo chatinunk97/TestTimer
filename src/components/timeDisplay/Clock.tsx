@@ -3,11 +3,39 @@ import { useMainContext } from "../../hooks/useMainContext";
 import { TimeInput } from "./TimeInput";
 import { setTime } from "../../context/MainContext";
 
+interface timeObj {
+  id: number;
+  placeHolder: string;
+  event: setTime;
+  value: number;
+}
 export const Clock: React.FC = () => {
-  const { minute, setMinute, second, setSecond, milisecond, setMilisecond } =
-    useMainContext();
-  const [isRunning, setIsrunning] = useState(false);
+  const {
+    minute,
+    second,
+    milisecond,
+    setMinute,
+    setSecond,
+    setMilisecond,
+    setGlobalMilisecond,
+    setGlobalMinute,
+    setGlobalSecond,
+    isRunning,
+    setIsrunning,
+  } = useMainContext();
 
+  const timeInputArray: timeObj[] = [
+    { id: 1, placeHolder: "minutes", event: setMinute, value: minute },
+    { id: 2, placeHolder: "seconds", event: setSecond, value: second },
+    {
+      id: 3,
+      placeHolder: "miliseconds",
+      event: setMilisecond,
+      value: milisecond,
+    },
+  ];
+
+  // HandleFunctions
   const handleTimeChange = (
     event: React.ChangeEvent<HTMLInputElement>,
     setState: setTime
@@ -19,7 +47,15 @@ export const Clock: React.FC = () => {
     }
     return;
   };
+  const handleStart = () => {
+    console.log(minute, second, milisecond);
+    setGlobalMilisecond(milisecond);
+    setGlobalSecond(second);
+    setGlobalMinute(minute);
+    setIsrunning(!isRunning);
+  };
 
+  //#######################  Refactor and seperate the Clock the timer to each file now is to much code in here
   useEffect(() => {
     let interval: ReturnType<typeof setInterval>;
     if (isRunning) {
@@ -38,22 +74,6 @@ export const Clock: React.FC = () => {
     return () => clearInterval(interval);
   }, [isRunning, milisecond, second, minute]);
 
-  interface timeObj {
-    id: number;
-    placeHolder: string;
-    event: setTime;
-    value: number;
-  }
-  const timeInputArray: timeObj[] = [
-    { id: 1, placeHolder: "minutes", event: setMinute, value: minute },
-    { id: 2, placeHolder: "seconds", event: setSecond, value: second },
-    {
-      id: 3,
-      placeHolder: "miliseconds",
-      event: setMilisecond,
-      value: milisecond,
-    },
-  ];
   return (
     <>
       <div className="timerHolder">
@@ -71,13 +91,7 @@ export const Clock: React.FC = () => {
         })}
       </div>
 
-      <button
-        onClick={() => {
-          setIsrunning(!isRunning);
-        }}
-      >
-        {!isRunning ? "Start !" : "Stop!!"}
-      </button>
+      <button onClick={handleStart}>{!isRunning ? "Start !" : "Stop!!"}</button>
     </>
   );
 };
